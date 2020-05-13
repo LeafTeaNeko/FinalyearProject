@@ -15,11 +15,8 @@ def object_detection(frames):
     
     layer_names = net.getLayerNames()
     output_layers = [layer_names[i[0] - 1] for i in net.getUnconnectedOutLayers()]
-    # colors = np.random.uniform(0, 255, size=(len(classes), 3))
     
-    # Loading image
-    # img = cv2.imread(frames)
-    # img = cv2.resize(img, None, fx=0.4, fy=0.4)
+    # Loading frames
     img = frames
     height, width, channels = img.shape 
 
