@@ -1,6 +1,8 @@
 import cv2
 import numpy as np
 import time
+# import matplotlib.pyplot as plt
+
 
 def object_detection(feed):    
     
@@ -18,12 +20,13 @@ def object_detection(feed):
     
     # Loading image
     cap = cv2.VideoCapture(feed)
-    # cap = feed
+    print("Data Arrived")
 
     while True:
         _, frame = cap.read()
         frame_id += 1
         height, width, channels = frame.shape
+        print("Data parsed")
     
         # Detecting objects
         blob = cv2.dnn.blobFromImage(frame, 0.00392, (416, 416), (0, 0, 0), True, crop=False)
@@ -63,6 +66,7 @@ def object_detection(feed):
                 #label = str(classes[i])  
                 label = str(classes[class_ids[i]])
                 confidence = confidences[i]
+                print("Object detected")
                 cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 255, 255), 2)
                 cv2.putText(frame, label + " " + str(round(confidence*100, 2)), (x, y + 30), font, 3, (6,0,225), 2)
                 if confidence>0.7:
@@ -76,16 +80,15 @@ def object_detection(feed):
         fps = frame_id / elapsed_time
         cv2.putText(frame, "FPS: " + str(round(fps, 2)), (10, 80), font, 2, (255,69,0), 2)
         
-        cv2.imshow("Image", frame)
-        key = cv2.waitKey(1)
-        if key == 27:
-            break
+        cv2.imshow("Image",frame)        
+        print("DISPLAY ACTIVE")
+
     
-    cap.release()
-    
+    cv2.waitKey(1)
+    cap.release()    
     cv2.destroyAllWindows()
     print("video destroyed")
     
     return None
 
-object_detection("Bideo.avi")
+object_detection("TestRovers.avi")
